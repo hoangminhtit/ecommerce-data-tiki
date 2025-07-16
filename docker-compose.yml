@@ -1,0 +1,39 @@
+version: '3.0'
+
+services:
+  selenium:
+    image: selenium/standalone-chrome
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+    environment:
+      - SE_NODE_MAX_SESSIONS=1
+      - SE_NODE_SESSION_TIMEOUT=120
+  
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+
+  airflow-webserver:
+    build: 
+      context: .             # dùng Dockerfile trong thư mục hiện tại
+      dockerfile: Dockerfile
+    image: apache/airflow:2.3.0-python3.8
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./data:/var/tmp/data
+      - ./src:/var/tmp/src
+    ports:
+      - 8080:8080
+    command: bash -c '(airflow db init && airflow users create --username admin --password admin --firstname minhds --lastname minhds --role Admin --email example@gmail.com); airflow webserver & airflow scheduler'
+
+  
+volumes:
+  dags:
+  app:
+
+  
