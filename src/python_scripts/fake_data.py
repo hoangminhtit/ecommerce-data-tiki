@@ -18,7 +18,7 @@ def generate_customer_data():
     customers = []
     for _ in range(50):
         customer = {
-            'customer_id': faker_data.uuid4(),
+            'customer_id': faker_data.unique.random_int(min=100, max=999),
             'customer_last_name': faker_data.last_name(),
             'customer_first_name': faker_data.first_name(),
             'customer_city': faker_data.city(),
@@ -66,7 +66,7 @@ if __name__=='__main__':
     
     #Get DataFrame product
     df_product = pd.read_csv('/var/tmp/data/transform_product_data.csv')
-    df_product['customer_id'] = np.random.choice(df_customer['customer_id'], size=len(df_product), replace=True)
+    # df_product['customer_id'] = np.random.choice(df_customer['customer_id'], size=len(df_product), replace=True)
     df_product.to_csv('/var/tmp/data/dim_products.csv', index=False)
     logger.info('Create dim_products')
 
@@ -80,8 +80,8 @@ if __name__=='__main__':
     #Get DataFrame orders
     orders = generate_order_data(df_product, df_customer)
     df_orders = pd.DataFrame(orders)
-    df_orders.to_csv('/var/tmp/data/dim_orders.csv', index=False)
-    logger.info('Create dim_orders')
+    df_orders.to_csv('/var/tmp/data/dim_order_details.csv', index=False)
+    logger.info('Create dim_order_details')
 
         
 

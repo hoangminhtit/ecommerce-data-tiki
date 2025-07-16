@@ -8,26 +8,26 @@ CREATE SCHEMA IF NOT EXISTS db;
 
 CREATE TABLE IF NOT EXISTS Customers (
   customerID integer PRIMARY KEY NOT NULL,
-  lastName nvarchar(255),
-  firstName nvarchar(255),
-  city nvarchar(255),              
+  lastName varchar(255),
+  firstName varchar(255),
+  city varchar(255),              
   phone varchar(15),                  
   gender varchar(10),                 
-  address nvarchar(255),
+  address varchar(255),
   dayOfBirth timestamp,                
-  country nvarchar(50)
+  country varchar(255)
 );
     
 CREATE TABLE IF NOT EXISTS Categories (
   categoryID varchar(50) PRIMARY KEY NOT NULL,
-  categoryName nvarchar(255)
+  categoryName varchar(255)
 );
     
 CREATE TABLE IF NOT EXISTS Products (
   productID integer PRIMARY KEY NOT NULL,
-  productName nvarchar(255),
-  brandName nvarchar(50),
-  categoryID varchar(50),
+  productName varchar(255),
+  brandName varchar(255),
+  categoryID varchar(255),
   priceOrigin decimal(10,2),
   priceDiscount decimal(10,2),
   quantitySold integer,
@@ -63,9 +63,9 @@ def write_data_to_database(cur, conn):
     """
     for _, row in df_customer.iterrows():
         cur.execute(insert_query_cust, (
-            row['customerID'], row['lastName'], row['firstName'],
-            row['city'], row['phone'], row['gender'],
-            row['address'], row['dayOfBirth'], row['country']
+            row['customer_id'], row['customer_last_name'], row['customer_first_name'],
+            row['customer_city'], row['customer_phone'], row['customer_gender'],
+            row['customer_address'], row['customer_birth_day'], row['customer_country']
         ))
     logging.info("Inserted customer data")
 
@@ -78,7 +78,7 @@ def write_data_to_database(cur, conn):
     """
     for _, row in df_category.iterrows():
         cur.execute(insert_query_cat, (
-            row['categoryID'], row['categoryName']
+            row['category_id'], row['category_name']
         ))
     logging.info("Inserted category data")
 
@@ -95,15 +95,15 @@ def write_data_to_database(cur, conn):
     """
     for _, row in df_product.iterrows():
         cur.execute(insert_query_prod, (
-            row['productID'], row['productName'], row['brandName'], row['categoryID'],
-            row['priceOrigin'], row['priceDiscount'], row['quantitySold'],
-            row['ratingAverage'], row['reviewCount'],
+            row['product_id'], row['product_name'], row['brand_name'], row['category_id'],
+            row['price_origin'], row['price_discount'], row['quantity_sold'],
+            row['rating_average'], row['review_count'],
             row['crawl_date'], row['in_stock']
         ))
     logging.info("Inserted product data")
 
     # ================== INSERT INTO OrderDetails ==================
-    df_orders = pd.read_csv('/var/tmp/data/dim_orders.csv')
+    df_orders = pd.read_csv('/var/tmp/data/dim_order_details.csv')
     insert_query_order = """
     INSERT INTO OrderDetails
     VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -111,8 +111,8 @@ def write_data_to_database(cur, conn):
     """
     for _, row in df_orders.iterrows():
         cur.execute(insert_query_order, (
-            row['orderID'], row['customerID'], row['productID'],
-            row['price'], row['quantity'], row['orderDate'], row['totalAmount']
+            row['order_id'], row['customer_id'], row['product_id'],
+            row['price'], row['quantity'], row['order_date'], row['total_amount']
         ))
     logging.info("Inserted order details data")
 
@@ -123,7 +123,7 @@ def write_data_to_database(cur, conn):
     
 if __name__=='__main__':
     conn = ps.connect(
-        host = 'docker.host.interval',
+        host = 'host.docker.internal',
         port = 5432,
         user = 'postgres',
         password = 'postgres',

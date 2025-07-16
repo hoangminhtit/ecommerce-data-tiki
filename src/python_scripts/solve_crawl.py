@@ -96,7 +96,7 @@ def get_product_id(product_url):
         logger.warning(f"Error getting product ID: {str(e)}")
         return "N/A"
 
-def get_text_element(driver, by, selector, default="N/A"):
+def get_text_element(driver, by, selector, default="Undefined"):
     """Lấy text từ phần tử, trả về default nếu lỗi"""
     try:
         return driver.find_element(by, selector).text
@@ -113,7 +113,7 @@ def get_information_products(get_category_urls, get_category_names):
                 EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a.sc-68e86366-2.bPchof.product-item'))
             )            
             get_url_products = driver.find_elements(By.CSS_SELECTOR, 'a.sc-68e86366-2.bPchof.product-item')            
-            for idx in range(min(5, len(get_url_products))):  # crawl 5 sản phẩm
+            for idx in range(min(2, len(get_url_products))):  # crawl 5 sản phẩm
                 try:
                     product_link = get_url_products[idx]
                     product_id = get_product_id(product_link)

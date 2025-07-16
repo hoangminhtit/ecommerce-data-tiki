@@ -22,7 +22,8 @@ services:
     build: 
       context: .             # dùng Dockerfile trong thư mục hiện tại
       dockerfile: Dockerfile
-    image: apache/airflow:2.3.0-python3.8
+    # image: apache/airflow:2.3.0-python3.8
+    # image: minhds/airflow:2.3.0-python3.8
     volumes:
       - ./dags:/opt/airflow/dags
       - ./data:/var/tmp/data
@@ -30,10 +31,10 @@ services:
     ports:
       - 8080:8080
     command: bash -c '(airflow db init && airflow users create --username admin --password admin --firstname minhds --lastname minhds --role Admin --email example@gmail.com); airflow webserver & airflow scheduler'
-
+  
   
 volumes:
   dags:
-  app:
+  data:
 
   
