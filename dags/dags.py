@@ -41,7 +41,13 @@ write_data_to_database = BashOperator(
     dag = dag
 )
 
-collection_data >> transform_data >> generate_data >> write_data_to_database
+visualize_data = BashOperator(
+    task_id = 'visualize_data',
+    bash_command = 'python /var/tmp/src/python_scripts/app.py',
+    dag = dag
+)
+
+collection_data >> transform_data >> generate_data >> write_data_to_database >> visualize_data
 
 
 

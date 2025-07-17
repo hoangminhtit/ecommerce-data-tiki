@@ -42,7 +42,7 @@ def generate_order_data(df_product, df_customer):
     for _ in range(100):  # 100 đơn hàng
         product = df_product.sample(1).iloc[0]
         customer = df_customer.sample(1).iloc[0]
-        quantity = random.randint(1, 3)
+        quantity = random.randint(1, 2)
         order_date = random_past_date(30)
         
         orders.append({

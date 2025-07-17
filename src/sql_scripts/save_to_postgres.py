@@ -4,8 +4,6 @@ import pandas as pd
 
 def create_tables(cur):
     scripts = """
-CREATE SCHEMA IF NOT EXISTS db;
-
 CREATE TABLE IF NOT EXISTS Customers (
   customerID integer PRIMARY KEY NOT NULL,
   lastName varchar(255),
