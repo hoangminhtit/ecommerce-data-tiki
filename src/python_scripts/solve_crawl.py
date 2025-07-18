@@ -69,7 +69,7 @@ def get_category_links(url):
         except Exception as e:
             logger.warning(f"Error extracting category link: {str(e)}")
             continue
-    return category_urls[:10], category_names[:10]
+    return category_urls[:20], category_names[:20]
 
 def extract_category(get_category_urls, category_names):
     """Trích xuất category_id từ URL và tạo dict với category_name"""
@@ -106,7 +106,7 @@ def get_text_element(driver, by, selector, default="N/A"):
 def get_information_products(get_category_urls, get_category_names):
     products = []
     categories = extract_category(get_category_urls, get_category_names)
-    for url_category, cat_id in zip(get_category_urls[:8], categories.values()):
+    for url_category, cat_id in zip(get_category_urls[:12], categories.values()):
         try:
             driver = initialize_driver(url_category)
             WebDriverWait(driver, 5).until(

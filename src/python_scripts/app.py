@@ -29,7 +29,7 @@ if __name__=='__main__':
         dbname="postgres",
         user="postgres",
         password="postgres",
-        host="localhost",  
+        host="host.docker.internal",  
         port=5432
     )
 
@@ -59,5 +59,5 @@ if __name__=='__main__':
         dcc.Graph(figure=fig)
     ])
 
-    app.run(debug=True, port=8050)
-    logging.info(f"Visualize data at http://localhost:8050/")
+    app.run(debug=True, port=8050, host='0.0.0.0')
+    logging.info(f"Visualize data at http://localhost:8050")

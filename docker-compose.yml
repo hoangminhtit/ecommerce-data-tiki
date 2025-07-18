@@ -40,6 +40,7 @@ services:
       - ./src:/var/tmp/src
     ports:
       - 8080:8080
+      - 8050:8050 # port for task visualization
     command: bash -c '(airflow db init && airflow users create --username admin --password admin --firstname minhds --lastname minhds --role Admin --email example@gmail.com); airflow webserver & airflow scheduler'
 
 volumes:

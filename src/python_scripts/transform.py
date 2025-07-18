@@ -35,5 +35,6 @@ if __name__=='__main__':
     df['quantity_sold'] = df['quantity_sold'].fillna(0).apply(clean_quantity_sold).astype('int')
     
     df.to_csv('/var/tmp/data/transform_product_data.csv', index=False)
+    print("Created transform_product_data.csv")
     
 

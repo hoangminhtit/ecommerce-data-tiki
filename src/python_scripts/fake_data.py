@@ -62,26 +62,26 @@ if __name__=='__main__':
     customers = generate_customer_data()
     df_customer = pd.DataFrame(customers)
     df_customer.to_csv('/var/tmp/data/dim_customers.csv', index=False)
-    logger.info('Create dim_customers')
+    logger.info('Created dim_customers')
     
     #Get DataFrame product
     df_product = pd.read_csv('/var/tmp/data/transform_product_data.csv')
     # df_product['customer_id'] = np.random.choice(df_customer['customer_id'], size=len(df_product), replace=True)
     df_product.to_csv('/var/tmp/data/dim_products.csv', index=False)
-    logger.info('Create dim_products')
+    logger.info('Created dim_products')
 
     #Category
     data_category = df_product[['category_id', 'category_name']]
     data_category.drop_duplicates(inplace=True)
     data_category.to_csv('/var/tmp/data/dim_categories.csv', index=False)
     df_product = df_product.drop(columns=['category_name'], axis=1)
-    logger.info('Create dim_categories')
+    logger.info('Created dim_categories')
 
     #Get DataFrame orders
     orders = generate_order_data(df_product, df_customer)
     df_orders = pd.DataFrame(orders)
     df_orders.to_csv('/var/tmp/data/dim_order_details.csv', index=False)
-    logger.info('Create dim_order_details')
+    logger.info('Created dim_order_details')
 
         
 
