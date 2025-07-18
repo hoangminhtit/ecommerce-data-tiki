@@ -45,6 +45,6 @@ services:
 volumes:
   dags:
   data:
-  pgadmin_data
+  pgadmin_data:
 
   
